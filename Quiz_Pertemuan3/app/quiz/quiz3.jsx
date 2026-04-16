@@ -1,0 +1,1 @@
+export { default } from "@/components/quiz/quiz_3/index";
