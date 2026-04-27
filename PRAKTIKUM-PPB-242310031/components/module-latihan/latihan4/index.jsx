@@ -1,6 +1,8 @@
 import {
   Image,
   StyleSheet,
+  SafeAreaView, 
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -9,15 +11,17 @@ import {
 
 const Index = () => {
   const Biodata = {
-    nama: "Anton Sukamto",
-    nim: "2323100",
+    nama: "Bahleeel",
+    nim: "33.22.11",
     alamat: "Bogor",
-    email: "anton@gmail.com",
-    noTelp: "08122111",
+    email: "PertaminaPusat@gmail.com",
+    noTelp: "081234567890",
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.container}>
       <Image
         style={styles.headers.img}
         source={require("../../../assets/avatar/bahleeel.jpg")}
@@ -61,14 +65,22 @@ const Index = () => {
 
       <View style={{ marginTop: 15 }}>
         <TouchableOpacity style={styles.identity.button}>
-          <Text style={styles.identity.button}>Save</Text>
+          <Text style={styles.identity.button_text}>Save</Text>
         </TouchableOpacity>
       </View>
     </View>
+    </ScrollView>
+  </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
