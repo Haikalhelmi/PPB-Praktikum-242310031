@@ -1,23 +1,32 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { TextInput, View } from "react-native";
-import { styles } from "../styles/StyleApps";
-const SearchBar = () => {
-  return (
-    <View style={styles.searchSection}>
-      <Ionicons
-        style={styles.searchIcon}
-        name="search-outline"
-        size={20}
-        color="gray"
-      />
+import { Platform, StyleSheet, TextInput, View } from "react-native";
+import { color_list, styles } from "../styles/StyleApps";
 
-      <TextInput
-        style={styles.input}
-        placeholder="Cari buku..."
-        underlineColorAndroid="transparent"
-      />
+export default function SearchBar({ value, setValue }) {
+  return (
+    <View style={styles.h_container}>
+      <View style={style_searchBar.search_container}>
+        <Ionicons name="search-outline" size={16} color="gray" />
+        <TextInput
+          autoFocus
+          placeholder="Search here"
+          value={value}
+          onChangeText={(text) => setValue(text)}
+        />
+      </View>
     </View>
   );
-};
+}
 
-export default SearchBar;
+const style_searchBar = StyleSheet.create({
+  search_container: {
+    backgroundColor: color_list.white,
+    borderWidth: 1,
+    borderRadius: 10,
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: Platform.OS === "ios" ? 10 : 15,
+    paddingVertical: Platform.OS === "ios" ? 10 : 0,
+  },
+});

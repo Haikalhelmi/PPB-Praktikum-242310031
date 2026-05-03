@@ -9,39 +9,17 @@ const color_list = {
 };
 
 const styles = StyleSheet.create({
-  searchSection: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
-    margin: 12,
-    paddingHorizontal: 10,
-  },
-  searchIcon: {
-    marginRight: 5,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    paddingVertical: 10,
-    color: "#424242",
-  },
   container: {
     flex: 1,
-    backgroundColor: color_list.cream, // Perbaikan typo dari 'crem'
-    paddingHorizontal: 20,
+    backgroundColor: color_list.cream,
+    paddingHorizontal: 20
   },
   title: {
     fontWeight: "bold",
     fontSize: 18,
-    color: "black",
+    color: "black"
   },
-  sub_title: {
-    fontSize: 16,
-    color: "gray",
-  },
+  sub_title: { fontSize: 16, color: "gray" },
   h_container: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -52,7 +30,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
-    elevation: 3,
+    elevation: 3
   },
   btn_icon: {
     width: 45,
@@ -82,8 +60,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 16,
   },
-
-  // --- Bagian Halaman 13 ---
   circle_premium: {
     position: "absolute",
     top: -5,
@@ -109,7 +85,7 @@ const styles = StyleSheet.create({
   },
   container_book_collections: {
     flex: 1,
-    marginTop: 10,
+    marginTop: 0,
   },
   container_book_collections_title: {
     fontSize: 18,
@@ -174,35 +150,6 @@ const styles = StyleSheet.create({
     color: "gray",
     marginLeft: 4,
   },
-  // Search Bar Styles
-  searchContainer: {
-    marginVertical: 10,
-  },
-  searchInputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: color_list.white,
-    borderRadius: 25,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
-  },
-  searchIcon: {
-    marginRight: 10,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-    color: "black",
-  },
-  clearButton: {
-    marginLeft: 10,
-  },
 });
 
-export { color_list, styles };
-
+export { styles, color_list };

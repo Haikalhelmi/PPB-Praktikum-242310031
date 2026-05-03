@@ -1,24 +1,50 @@
-import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { color_list, styles } from "../styles/StyleApps";
 
 export default function BookCollectioins({ books }) {
   const sortedBooks = [...books].sort((a, b) => b.id - a.id);
+  const totalBooks = books.length || 0;
   return (
     <View style={styles.container_book_collections}>
       <View style={styles.h_container}>
         <Text style={styles.container_book_collections_title}>
-          Koleksi Buku
+          Book Collection
         </Text>
-        <Text style={{ color: color_list.green }}>See All</Text>
+        <Text style={{ color: color_list.green }}>
+          {totalBooks > 0 ? `Total ${totalBooks} items` : "See All"}
+        </Text>
       </View>
 
-      <BookList books={sortedBooks} />
+      {books && totalBooks > 0 ? (
+        <BookList books={sortedBooks} />
+      ) : (
+        <View style={style_no_record.container}>
+          <Text style={style_no_record.text}>No record found</Text>
+        </View>
+      )}
     </View>
   );
 }
+
+const style_no_record = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: color_list.white,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 20,
+    borderRadius: 10,
+    borderColor: color_list.green,
+    borderWidth: 1,
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: color_list.green,
+  },
+});
 
 const BookList = ({ books }) => {
   return (
@@ -47,7 +73,7 @@ const BookItemImg = ({ book }) => {
       />
       {!book.is_free && (
         <View style={[styles.circle_premium_small, styles.shadow]}>
-          <AntDesign name="crown" size={12} color="black" />
+          <AntDesign name="crown" size={18} color="black" />
         </View>
       )}
     </View>
@@ -67,14 +93,12 @@ const BookItemContent = ({ book }) => {
       <Text style={styles.book_card_author} numberOfLines={1}>
         {book.author}
       </Text>
-
       {/* RATING & VIEWERS */}
       <View style={styles.book_card_footer}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <AntDesign name="star" size={14} color={color_list.orange} />
           <Text style={styles.book_card_rating}>{book.rating}</Text>
         </View>
-
         {book.views && (
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Ionicons name="eye-outline" size={14} color="gray" />

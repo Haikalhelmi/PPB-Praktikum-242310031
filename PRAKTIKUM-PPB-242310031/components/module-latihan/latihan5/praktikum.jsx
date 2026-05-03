@@ -1,41 +1,66 @@
-import { ScrollView, StatusBar, Text, View } from "react-native";
+import { useMemo, useState } from "react";
+import { ScrollView, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ListBook } from "../../../constants/list_books";
-import BookCollectioins from "../latihan5/components/BookCollectioins";
-import Categoriesnav from "../latihan5/components/Categories";
-import CTABook from "../latihan5/components/CTABook";
-import Header from "../latihan5/components/Header";
-import { color_list, styles } from "./styles/StyleApps";
 
-export default function HomeScreen() {
-  const lastBook = ListBook[ListBook.length - 1];
+import BookCollectioins from "./components/BookCollectioins";
+import PagingComponent from "./components/PagingComponent";
+import SearchBar from "./components/SearchBar";
+import { styles } from "./styles/StyleApps";
+
+export default function SearchPage() {
+  const [search, setSearch] = useState("");
+  const [books, setBooks] = useState(ListBook);
+  const [totalItems, setTotalItems] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 4;
+
+  const BookDataMemori = useMemo(() => {
+    let computedData = [...books];
+
+    if (search) {
+      computedData = computedData.filter((listData) => {
+        return Object.keys(listData).some((key) => {
+          try {
+            const value = listData[key];
+            return (
+              value != null &&
+              String(value).toLowerCase().includes(search.toLowerCase())
+            );
+          } catch (error) {
+            console.error(`Error processing key "${key}":`, error);
+            return false;
+          }
+        });
+      });
+    }
+
+    setTotalItems(computedData.length);
+
+    if (computedData.length > 0) {
+      return computedData.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        (currentPage - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE,
+      );
+    } else {
+      return [];
+    }
+  }, [search, books, currentPage]);
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={"dark-content"} />
-      {/* HEADER */}
-      <Header />
-      {/* END HEADER */}
-
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 }}
-      >
-        {/* MAIN CONTENT */}
-        <View style={{ flex: 1 }}>
-          <CTABook book={lastBook} />
-          <Categoriesnav />
-          <BookCollectioins books={ListBook} />
-        </View>
-        {/* END MAIN CONTENT */}
-
-        {/* FOOTER */}
-        <View>
-          <Text style={{ color: color_list.green }}>
-            &copy; 2026 kkkaaalll. All rights reserved.
-          </Text>
-        </View>
-        {/* END FOOTER */}
+      <SearchBar value={search} setValue={setSearch} />
+      <ScrollView style={{ flex: 1 }}>
+        <BookCollectioins books={BookDataMemori} />
+        {totalItems > 0 && (
+          <PagingComponent
+            total={totalItems}
+            itemsPerPage={ITEMS_PER_PAGE}
+            currentPage={currentPage}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+        )}
       </ScrollView>
     </SafeAreaView>
   );
